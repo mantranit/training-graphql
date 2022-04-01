@@ -36,14 +36,18 @@ import { getAccessToken } from "./utils/getToken";
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [AuthResolver, UserResolver],
+      resolvers: [
+        AuthResolver,
+        UserResolver
+      ],
     }),
     context: ({ req, res }) => ({ req, res }),
   });
   await apolloServer.start();
   apolloServer.applyMiddleware({ app });
 
-  app.listen(5050, () => {
-    console.log("Express server started.");
+  const port = process.env.PORT || 5000
+  app.listen(port, () => {
+    console.log(`Express server started on port ${port}.`);
   });
 })();

@@ -7,8 +7,8 @@ import { isAuth } from "../utils/isAuth";
 export class UserResolver {
   @Query(() => String)
   @UseMiddleware(isAuth)
-  helloUser(@Ctx() { payload }: AppContext) {
-    return "UserId = " + payload.userId;
+  helloUser(@Ctx() { user }: AppContext) {
+    return "Email = " + user.email;
   }
 
   @Query(() => [User])

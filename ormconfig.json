@@ -1,10 +1,10 @@
 {
    "type": "postgres",
-   "host": "localhost",
+   "host": "103.153.72.195",
    "port": 5432,
    "username": "postgres",
-   "password": "postgres",
-   "database": "training_graphql",
+   "password": "anhoa22",
+   "database": "gara-demo",
    "synchronize": true,
    "logging": false,
    "entities": [
