@@ -10,9 +10,10 @@ import { createConnection } from "typeorm";
 import { AuthResolver } from "./resolver/Auth";
 import { UserResolver } from "./resolver/User";
 import { getAccessToken } from "./utils/getToken";
+import { configDB } from "../ormconfig";
 
 (async () => {
-  await createConnection()
+  await createConnection(configDB())
     .then(() => {
       console.log("Connected to database successful.");
     })
