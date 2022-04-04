@@ -9,6 +9,17 @@ Example code for the video: https://www.youtube.com/watch?v=Yth1jnFrKI4
 Steps to run this project:
 
 1. Run `yarn` command
-
 2. Setup database settings inside `ormconfig.json` file
-3. Run `yarn start` command
+3. Example environment variables
+```
+ACCESS_SECRET = 
+REFRESH_SECRET = 
+EXPIRES_IN = 
+
+DB_HOST = 
+DB_PORT = 
+DB_USERNAME = 
+DB_PASSWORD = 
+DB_DATABASE = 
+```
+4. Run `yarn start` command
