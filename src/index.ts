@@ -6,19 +6,29 @@ import express from "express";
 import { verify } from "jsonwebtoken";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
-import { createConnection } from "typeorm";
+import { createConnection, getConnectionOptions } from "typeorm";
 import { AuthResolver } from "./resolver/Auth";
 import { UserResolver } from "./resolver/User";
 import { getAccessToken } from "./utils/getToken";
-import { configDB } from "../ormconfig";
 
 (async () => {
-  await createConnection(configDB())
+  // read connection options from ormconfig file (or ENV variables)
+  const connectionOptions = await getConnectionOptions();
+  Object.assign(connectionOptions, {
+    "host": process.env.DB_HOST,
+    "port": process.env.DB_PORT,
+    "username": process.env.DB_USERNAME,
+    "password": process.env.DB_PASSWORD,
+    "database": process.env.DB_DATABASE,
+  });
+  // create a connection using modified connection options
+  await createConnection(connectionOptions)
     .then(() => {
       console.log("Connected to database successful.");
     })
     .catch((error) => console.log(error));
 
+  // create server express
   const app = express();
   app.use(cors());
   app.use(cookieParser());
@@ -35,6 +45,7 @@ import { configDB } from "../ormconfig";
     res.status(200).json({ accessToken: getAccessToken(payload.userId) });
   });
 
+  // create graphql
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [
